@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/feedback-:slug", "destination": "/feedback.html" }
+  ]
+}

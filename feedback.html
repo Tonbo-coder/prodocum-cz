@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zpětná vazba — Prodocum</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="stylesheet" href="/feedback.css">
+</head>
+<body>
+
+  <div class="fb-page">
+    <!-- Top brand bar -->
+    <div class="fb-topbar">
+      <div class="fb-topbar__inner">
+        <span class="fb-topbar__brand" id="fb-project-name">Prodocum</span>
+      </div>
+    </div>
+    <div class="fb-accent-bar"></div>
+
+    <!-- Main content -->
+    <div class="fb-container">
+      <div class="fb-card">
+
+        <div id="fb-form-content">
+          <!-- Rating indicator -->
+          <div class="fb-rating" id="fb-rating-display">
+            <div class="fb-rating__emoji" id="fb-rating-emoji"></div>
+            <div class="fb-rating__label" id="fb-rating-label"></div>
+          </div>
+
+          <!-- Headline -->
+          <h1 class="fb-headline">Vaše zpětná vazba nás zajímá</h1>
+          <p class="fb-subtext">
+            Mrzí nás, že jste nebyli zcela spokojeni. Pomozte nám zlepšit naše služby
+            — vaše zkušenost je pro nás cenná.
+          </p>
+
+          <!-- Form -->
+          <form id="fb-form" class="fb-form">
+            <input type="hidden" name="rating" id="fb-rating-value" value="">
+
+            <!-- Category -->
+            <div class="fb-field">
+              <label for="fb-category" class="fb-label">Oblast zpětné vazby</label>
+              <select id="fb-category" name="category" class="fb-select"></select>
+            </div>
+
+            <!-- Message -->
+            <div class="fb-field">
+              <label for="fb-message" class="fb-label">Co bychom mohli udělat lépe? <span class="fb-required">*</span></label>
+              <textarea id="fb-message" name="message" class="fb-textarea" rows="5" placeholder="Popište prosím vaši zkušenost…" required></textarea>
+            </div>
+
+            <!-- Name -->
+            <div class="fb-row">
+              <div class="fb-field">
+                <label for="fb-name" class="fb-label">Jméno <span class="fb-optional">(nepovinné)</span></label>
+                <input type="text" id="fb-name" name="name" class="fb-input" placeholder="Jan Novák">
+              </div>
+
+              <!-- Email -->
+              <div class="fb-field">
+                <label for="fb-email" class="fb-label">E-mail <span class="fb-optional">(nepovinné)</span></label>
+                <input type="email" id="fb-email" name="email" class="fb-input" placeholder="jan@email.cz">
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="fb-submit">Odeslat zpětnou vazbu</button>
+
+            <p class="fb-note">
+              Vaše údaje použijeme výhradně ke zlepšení našich služeb.
+            </p>
+          </form>
+        </div>
+
+        <!-- Success state -->
+        <div id="fb-success" class="fb-success" style="display:none;">
+          <div class="fb-success__icon">✓</div>
+          <h2 class="fb-success__title">Děkujeme za zpětnou vazbu</h2>
+          <p class="fb-success__text">
+            Vašeho názoru si velmi vážíme. Pomáháte nám stále se zlepšovat.
+          </p>
+          <a href="/" class="fb-success__link" id="fb-project-link">Zpět na hlavní stránku</a>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="fb-footer">
+        <p>&copy; 2025 ProDocum, s.r.o. | IČO 10745041</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/feedback.js"></script>
+</body>
+</html>
