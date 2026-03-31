@@ -107,7 +107,7 @@ module.exports = async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: `"Prodocum Feedback" <${process.env.GMAIL_USER}>`,
+      from: `"Prodocum Feedback" <${process.env.FEEDBACK_FROM || process.env.GMAIL_USER}>`,
       to: process.env.FEEDBACK_TO || 'info@prodocum.cz',
       replyTo: senderEmail !== 'Neuvedeno' ? senderEmail : undefined,
       subject,
