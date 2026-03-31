@@ -1,5 +1,8 @@
 {
   "rewrites": [
     { "source": "/feedback-:slug", "destination": "/feedback.html" }
+  ],
+  "errors": [
+    { "statusCode": 404, "source": "/404.html" }
   ]
 }
