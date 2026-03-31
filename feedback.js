@@ -167,62 +167,50 @@ function initForm(project, rating) {
   const successEl = document.getElementById('fb-success');
   const formContent = document.getElementById('fb-form-content');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const data = {
-      project: project.domain,
-      projectSlug: getProjectSlug(),
-      rating: rating,
-      category: document.getElementById('fb-category').value,
-      message: document.getElementById('fb-message').value,
-      name: document.getElementById('fb-name').value,
-      email: document.getElementById('fb-email').value,
-      timestamp: new Date().toISOString(),
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Odesílám…';
+
+    const payload = {
+      project:   getProjectSlug(),
+      rating:    rating,
+      category:  document.getElementById('fb-category').value,
+      message:   document.getElementById('fb-message').value,
+      name:      document.getElementById('fb-name').value,
+      email:     document.getElementById('fb-email').value,
+      honeypot:  document.getElementById('fb-honeypot')?.value || '',
     };
 
-    /*
-     * ============================================
-     * BACKEND INTEGRATION POINT
-     * ============================================
-     * Replace the block below with your API call.
-     * Example with fetch:
-     *
-     *   fetch('https://your-api.com/feedback', {
-     *     method: 'POST',
-     *     headers: { 'Content-Type': 'application/json' },
-     *     body: JSON.stringify(data),
-     *   })
-     *   .then(() => showSuccess())
-     *   .catch(() => showError());
-     *
-     * Options:
-     *   - Vercel Serverless Function (/api/feedback)
-     *   - Formspree / Formspark
-     *   - Google Sheets via Apps Script
-     *   - Email via SendGrid/Mailgun
-     * ============================================
-     */
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-    // Fallback: mailto with pre-filled data
-    const subject = encodeURIComponent(project.emailSubject);
-    const body = encodeURIComponent(
-      `Projekt: ${project.name} (${project.domain})\n` +
-      `Hodnocení: ${rating || 'neuvedeno'}\n` +
-      `Kategorie: ${data.category || 'neuvedena'}\n` +
-      `Jméno: ${data.name || 'neuvedeno'}\n` +
-      `E-mail: ${data.email || 'neuvedeno'}\n\n` +
-      `Zpráva:\n${data.message}`
-    );
+      const json = await res.json();
 
-    // Open mailto as backup, then show success
-    window.location.href = `mailto:info@prodocum.cz?subject=${subject}&body=${body}`;
-
-    // Show success state
-    setTimeout(() => {
-      formContent.style.display = 'none';
-      successEl.style.display = 'block';
-    }, 500);
+      if (res.ok && json.ok) {
+        formContent.style.display = 'none';
+        successEl.style.display = 'block';
+      } else {
+        throw new Error(json.error || 'Chyba serveru');
+      }
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+      const errEl = document.getElementById('fb-error');
+      if (errEl) {
+        errEl.textContent = err.message || 'Nepodařilo se odeslat formulář. Zkuste to prosím znovu.';
+        errEl.style.display = 'block';
+      } else {
+        alert(err.message || 'Nepodařilo se odeslat formulář.');
+      }
+    }
   });
 }
 

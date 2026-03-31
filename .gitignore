@@ -1,13 +1,3 @@
-# Claude Code
-.claude/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Editor
-.vscode/
-.idea/
-
-# Node (pro případ budoucího toolingu)
 node_modules/
+.env
+.env.local
